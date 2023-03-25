@@ -14,3 +14,16 @@ def data_acquisition():
         f"Awaiting OpenSignals stream from device {pc_mac_address}..."
     )  # string output to the user
     streams = resolve_stream("type", pc_mac_address)
+    
+    if len(streams) == 0:
+        print(
+            """Stream not found!!!
+            Ensure that the Bitalino is connected and OpenSignals is running.
+            Also make sure that the lab streaming layer is checked to allow the signal flow
+            """
+        )
+        sys.exit()
+    print("EMG Stream identified!!!")
+
+    # inlet to receive data from the stream instantiated
+    inlet = StreamInlet(streams[0])
