@@ -78,3 +78,10 @@ def data_acquisition():
                 coefficients[i] = pywt.threshold(
                     coefficients[i], threshold * np.max(coefficients[i]), "soft"
                 )
+
+            # Reconstructed the signal from the modified coefficients
+            reconstructed_buffer = pywt.waverec(coefficients, wavelet)
+
+            # Rectified the processed signal by taking the absolute value of the reconstructed signal
+            rectified_buffer = np.abs(reconstructed_buffer)
+
