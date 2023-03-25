@@ -28,3 +28,21 @@ def data_acquisition():
     # inlet to receive data from the stream instantiated
     inlet = StreamInlet(streams[0])
     
+    # Set up wavelet parameters for preprocessing the signal
+    sampling_rate = 1000  # sampling rate in Hz
+    wavelet = "db4"  # type of wavelet to use
+    level = 6  # level of decomposition
+    mode = "symmetric"  # signal extension mode
+
+    # wavelet transform variable to store extracted features from the signal
+    wavelet = pywt.Wavelet("sym4")
+
+    # Buffer for storing incoming samples
+    buffer_size = 100
+    buffer = np.zeros((buffer_size, 8))
+
+    # Threshold to trigger for muscle movement detection
+    threshold = 0.1
+
+    # Boolean state to check if a jump has occurred during the current iteration of the while loop
+    jumped = False
