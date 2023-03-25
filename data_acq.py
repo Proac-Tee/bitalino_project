@@ -46,3 +46,17 @@ def data_acquisition():
 
     # Boolean state to check if a jump has occurred during the current iteration of the while loop
     jumped = False
+    
+    # A loop to continuously receive and preprocess EMG data from gotten the Bitalino device via open-signals lsl
+    while True:
+        # Extract the chunk of samples from the inlet
+        chunk, timestamps = inlet.pull_chunk(timeout=1.0, max_samples=buffer_size)
+        if chunk:
+            # Append chunk to buffer
+            buffer = np.roll(buffer, -len(chunk), axis=0)
+            buffer[-len(chunk) :, :] = np.array(chunk)[
+                :, 1:9
+            ]  # EMG data from chunk channel extraction. In this case it is connected to channel A1
+
+            # Concatenate buffer rows to form input signal
+            input_signal = buffer.flatten()
