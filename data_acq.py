@@ -65,3 +65,16 @@ def data_acquisition():
             coefficients = pywt.wavedec(input_signal, wavelet, mode=mode, level=level)
             filtered_coefficients = [pywt.threshold(c, np.std(c)) for c in coefficients]
             filtered_signal = pywt.waverec(filtered_coefficients, wavelet, mode=mode)
+            
+
+            # Reshaping of the filtered signal back into buffer format
+            filtered_buffer = filtered_signal.reshape((-1, 8))
+
+            # Applied wavelet transform to the signal
+            coefficients = pywt.wavedec(filtered_buffer, wavelet, level=4)
+
+            # Apply threshold to the signal to remove the presence of noise
+            for i in range(1, len(coefficients)):
+                coefficients[i] = pywt.threshold(
+                    coefficients[i], threshold * np.max(coefficients[i]), "soft"
+                )
