@@ -84,3 +84,19 @@ def data_acquisition():
 
             # Rectified the processed signal by taking the absolute value of the reconstructed signal
             rectified_buffer = np.abs(reconstructed_buffer)
+            
+            # conditional statement to detect muscle movement from the user
+            if np.any(rectified_buffer > threshold):
+                # if the threshold is triggered the jump state switches
+                jumped = True
+
+            # Print "jump" to the console if muscle movement has occurred during the current iteration of the while loop
+            if jumped:
+
+                print("jump")
+                # reinitialize the jump state to the rest state of false
+                return jumped
+
+
+            
+            
