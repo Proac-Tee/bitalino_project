@@ -60,3 +60,8 @@ def data_acquisition():
 
             # Concatenate buffer rows to form input signal
             input_signal = buffer.flatten()
+            
+            # wavelet transform to the clean the signal
+            coefficients = pywt.wavedec(input_signal, wavelet, mode=mode, level=level)
+            filtered_coefficients = [pywt.threshold(c, np.std(c)) for c in coefficients]
+            filtered_signal = pywt.waverec(filtered_coefficients, wavelet, mode=mode)
