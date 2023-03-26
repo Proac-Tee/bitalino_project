@@ -38,7 +38,19 @@ while running:
     jumped = data_acquisition()
     
     
-    
     # Update player position and velocity
     player_vel_y += GRAVITY
     player_y += player_vel_y
+    
+    # Check if the jump state is true
+    if jumped == True:
+        player_vel_y = JUMP_VELOCITY
+
+    # Draw the player
+    screen.fill((255, 255, 255))
+    screen.blit(player_img, (player_x, player_y))
+
+    # Update the display
+    pygame.display.update()
+
+pygame.quit()
