@@ -26,3 +26,13 @@ import threading
 
 acquisition_thread = threading.Thread(target=data_acquisition)
 acquisition_thread.start()
+
+# Game loop
+running = True
+while running:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    jumped = data_acquisition()
