@@ -36,3 +36,9 @@ while running:
             running = False
 
     jumped = data_acquisition()
+    
+    
+    
+    # Update player position and velocity
+    player_vel_y += GRAVITY
+    player_y += player_vel_y
